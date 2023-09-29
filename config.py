@@ -3,8 +3,12 @@
 #-- BIBLIOTECAS -----------------------------------------------------------------------------------------------------------------------------
 from os import system
 #-- CONFIGURAÇÕES ---------------------------------------------------------------------------------------------------------------------------
+# >> Gerais
 DEPURAÇÃO = True
 EM_EXECUÇÃO = True
+# >> Definições
+SEPARADOR = ';'
+PRODUTOS_DIR = 'Controle-de-estoque/produtos.txt'
 # >> Define cores
 CMD_VERMELHO = '\033[1;31;40m'
 CMD_VERDE    = '\033[1;32;40m'
@@ -25,8 +29,36 @@ def cfValidarSel(arg, num_sel):
     return True
 
 # >> Coloca um texto na tela somente em mode de depuração
-def cfPrint(text, skip = False):
+def cfPrint(text, type = '', skip = False):
     if DEPURAÇÃO:
-        print(f'{CMD_AMARELO}[DEPURAÇÃO] {text}{CMD_DEFAULT}')
+        match type:
+            case 'Sucesso' : print(f'{CMD_VERDE}[DEPURAÇÃO] ', end = '')
+            case 'Aviso'   : print(f'{CMD_AMARELO}[AVISO] ', end = '')
+            case 'Erro'    : print(f'{CMD_VERMELHO}[ERRO] ', end = '')
+            case ''        : print(f'{CMD_AZUL}[DEPURAÇÃO] ', end = '')
+        print(f'{text}{CMD_DEFAULT}')
         if not skip: system('pause')
+#-- BANCO DE DADOS --------------------------------------------------------------------------------------------------------------------------
+PRODUTOS = []
+try:
+    with open(PRODUTOS_DIR, 'r', encoding='utf-8') as prod_db:
+        for line in prod_db.readlines():
+            PRODUTOS.append( line.split(SEPARADOR)[:-1] )
+except:
+    system('cls')
+    cfPrint(f'O arquivo "{PRODUTOS_DIR}" não pode ser aberto corretamente!', type = 'Erro')
+
+def cfMostrarEstoque(ARG):
+    output = ''
+    for prod in ARG:
+        output += ('|{:<25} {:<5.2f}R$ {:<4}x|\n'.format(prod[0], float(prod[1]), prod[2]))
+    output += '|---------------------------------------|'
+    return output
+
+def cfValorLiquido(ARG):
+    total = 0
+    for prod in ARG:
+        total += float(prod[1]) * float(prod[2])
+    return '> Valor total em estoque {:<5.2f}R$'.format(total)
+
 #--------------------------------------------------------------------------------------------------------------------------------------------

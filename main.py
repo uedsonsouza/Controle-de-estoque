@@ -9,9 +9,7 @@
 # ● Bruno Alex Cardoso Freitas
 # >> Escopo do projeto
 #   Com este sistema, um gerente de uma loja hipotética será capaz de verificar o estoque atual de sua loja, o valor líquido dos produtos,
-# assim como adicionar e remover produtos a qualquer momento. O sistema também deverá ser capaz de registrar e atualizar uma lista
-# de fornecedores. Além disso, através de uma página de log-in, o sistema será capaz de definir o tipo de usuário (admin ou funcionário) para
-# limitar funções dentro do processo.
+# assim como adicionar e remover produtos a qualquer momento.
 #   O programa será feito em python e usará um arquivo .TXT como arquivo para de banco de dados. O sistema será demonstrado através de uma
 # interface gerada no CMD.
 #-- BIBLIOTECAS -----------------------------------------------------------------------------------------------------------------------------
@@ -30,7 +28,7 @@ if __name__ == '__main__':
     # Fim do programa
         if page == -1: break
         elif page < -1:
-            cfPrint('Um erro inesperado ocorreu...', skip = True)
+            cfPrint('Um erro inesperado ocorreu...', type = 'Erro', skip = True)
             break
     print(f'{CMD_VERDE}< FIM DO PROGRAMA >{CMD_DEFAULT}')
     
