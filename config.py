@@ -40,6 +40,7 @@ def cfPrint(text, type = '', skip = False):
         if not skip: system('pause')
 #-- BANCO DE DADOS --------------------------------------------------------------------------------------------------------------------------
 PRODUTOS = []
+"""PRODUTOS = []
 try:
     with open(PRODUTOS_DIR, 'r', encoding='utf-8') as prod_db:
         for line in prod_db.readlines():
@@ -47,14 +48,28 @@ try:
 except:
     system('cls')
     cfPrint(f'O arquivo "{PRODUTOS_DIR}" não pode ser aberto corretamente!', type = 'Erro')
-
+"""
 def cfMostrarEstoque(ARG):
+    output = ''
+    try:
+        with open(PRODUTOS_DIR, 'r', encoding='utf-8') as prod_db:
+            for line in prod_db.readlines():
+                #PRODUTOS.append( line.split(SEPARADOR)[:-1] )
+                # [Novo,12.0,44]
+                prod = line.split(SEPARADOR)
+                output += ('|{:<25} {:<5.2f}R$ {:<4}x|\n'.format(prod[0], float(prod[1]), prod[2]))
+            output += '|---------------------------------------|'
+        return output
+    except:
+        system('cls')
+        cfPrint(f'O arquivo "{PRODUTOS_DIR}" não pode ser aberto corretamente!', type = 'Erro')
+""""
     output = ''
     for prod in ARG:
         output += ('|{:<25} {:<5.2f}R$ {:<4}x|\n'.format(prod[0], float(prod[1]), prod[2]))
     output += '|---------------------------------------|'
     return output
-
+"""
 def cfValorLiquido(ARG):
     total = 0
     for prod in ARG:
