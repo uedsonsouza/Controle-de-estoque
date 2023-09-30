@@ -49,3 +49,4 @@ Feijão Preto;4.99;30;
 Grão-de-Bico;3.49;40;
 Lentilhas;2.79;50;
 Pera;6.0;350;
+Novo3;44.0;30;

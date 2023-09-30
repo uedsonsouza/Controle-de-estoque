@@ -15,7 +15,9 @@ class Página:
         system('cls')
         cfPrint(f'PG_NUM: {self.num}', skip = True)
         print(self.pag)
-
+    def pgAtualizarPag(self,ARG):
+        self.pag=ARG
+        
     # Executa uma função
     def pgExcSel(self, cursor):
         system('cls')
@@ -24,9 +26,7 @@ class Página:
                 match cursor:
                     case '1': return 1
                     case '2': return 2
-                    case '3': #TODO Remover produto
-                        cfPrint(f'Ops! Esta função ainda não foi implementada...', type = 'Aviso')
-                        return self.num
+                    case '3': return 3
                     case '4': return -1
                     case _: return -2
 
@@ -60,6 +60,43 @@ class Página:
                         return 0
                     case '2': return 0
                     case _: return -2
+                    
+                    
+            elif self.nome =='Remover produto':
+                match cursor:
+                    case '1':
+                        system('cls')
+                        prod=input('Nome do produto: ')
+                        quant=0
+                        while (quant<1):
+                            quant=input('quantidade do produto a ser removido: ')
+                            try: 
+                                quant = int(quant)
+                                if (quant<0):
+                                    print(f'{CMD_VERMELHO}[ERRO!] Este não é uma quantidade válida! {CMD_DEFAULT}')
+                            except: print(f'{CMD_VERMELHO}[ERRO!] Este não é uma quantidade válida! {CMD_DEFAULT}')
+
+                        try:
+                            with open(PRODUTOS_DIR, 'r', encoding='utf-8') as prod_db:
+                                lines = prod_db.readlines()
+                                for i in range(len(lines)):
+                                    SPL=lines[i].split(SEPARADOR)
+                                    if(lines[i].split(SEPARADOR)[0]==prod):
+                                        if(int(SPL[2])-int(quant)>0):
+                                            lines[i]=f'{SPL[0]}{SEPARADOR}{SPL[1]}{SEPARADOR}{int(SPL[2])-int(quant)}{SEPARADOR}\n'
+                                        else:
+                                            lines[i]=''
+                                        break
+                            with open(PRODUTOS_DIR, 'w', encoding='utf-8') as prod_db:
+                                prod_db.writelines(lines)
+                        except:
+                            system('cls')
+                            cfPrint(f'O arquivo "{PRODUTOS_DIR}" não pode ser aberto corretamente!', type = 'Erro')
+                        return 0
+                    case '2':
+                        return 0
+                    case _: 
+                        return -2
         else: # Entrada inválida
             print(f'{CMD_VERMELHO}[ERRO!] Opção inválida! Por favor, certifique-se de selecionar uma das opções listadas.{CMD_DEFAULT}')
             system('pause')
@@ -81,8 +118,8 @@ f'''
 Página('Estoque', 1,
 f'''
 |== ESTOQUE ============================|
-{cfMostrarEstoque(PRODUTOS)}
-{cfValorLiquido(PRODUTOS)}
+{cfMostrarEstoque()}
+{cfValorLiquido()}
 | 1. Voltar                             |
 |=======================================|''', num_sel = 1),
 
@@ -92,6 +129,15 @@ f'''
 |== NOVO PROD. =========================|
 | 1. Continuar                          |
 | 2. Cancelar                           |
-|=======================================|''', num_sel = 2)
+|=======================================|''', num_sel = 2),
+
+Página('Remover produto',3,
+f'''
+|== REMOVER PROD. ======================|
+| 1. Continuar                          |
+| 2. Cancelar                           |
+|=======================================|''', num_sel = 2) 
+
+
 ]
 #--------------------------------------------------------------------------------------------------------------------------------------------

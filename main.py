@@ -23,6 +23,12 @@ if __name__ == '__main__':
     page = 0
     while (True): # Loop principal
         PÁGINAS[page].pgDesenharPag()
+        PÁGINAS[1].pgAtualizarPag(f'''
+|== ESTOQUE ============================|
+{cfMostrarEstoque()}
+{cfValorLiquido()}
+| 1. Voltar                             |
+|=======================================|''')
         page = PÁGINAS[page].pgExcSel(input('>> '))
 
     # Fim do programa
