@@ -8,7 +8,7 @@ DEPURAÇÃO = True
 EM_EXECUÇÃO = True
 # >> Definições
 SEPARADOR = ';'
-PRODUTOS_DIR = 'Controle-de-estoque/produtos.txt'
+PRODUTOS_DIR = './produtos.txt'
 # >> Define cores
 CMD_VERMELHO = '\033[1;31;40m'
 CMD_VERDE    = '\033[1;32;40m'
