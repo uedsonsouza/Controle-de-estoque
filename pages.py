@@ -52,8 +52,6 @@ class Página:
 
                         try:
                             with open(PRODUTOS_DIR, 'a', encoding='utf-8') as prod_db:
-                                for line in prod_db.readlines():
-                                    if line[0] == prd_nome: return 0
                                 prod_db.write(f'\n{prd_nome}{SEPARADOR}{prd_valor}{SEPARADOR}{prd_qnt}{SEPARADOR}')
                         except:
                             system('cls')
